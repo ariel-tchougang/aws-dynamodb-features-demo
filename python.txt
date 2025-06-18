@@ -1,0 +1,35 @@
+### Python 3.11
+
+Make sure Python is installed on your system. You’ll also need to set up a virtual environment.
+
+```
+python --version
+```
+
+### Create a Python Virtual Environment
+
+- Windows
+
+```
+python -m venv .venv
+.venv\Scripts\activate
+python -m pip install --upgrade pip
+
+```
+
+- Linux/macOS
+
+```
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip
+
+```
+
+### Install Dependencies
+
+Install the required Python packages listed in requirements.txt
+
+```
+pip install -r requirements.txt
+```
