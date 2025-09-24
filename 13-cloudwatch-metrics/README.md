@@ -84,10 +84,4 @@ This will create a dashboard with:
 
 ## Next Steps
 
-Congratulations! You've completed all the labs in this DynamoDB features demo. You now have hands-on experience with a wide range of DynamoDB features and best practices.
-
-To clean up all resources created during these labs, run:
-
-```bash
-python ../cleanup.py
-```
+Once you've mastered CloudWatch monitoring, proceed to [Lab 14: PartiQL Queries](../14-query-with-partiQL/) to learn how to use SQL-like syntax to query DynamoDB tables.
