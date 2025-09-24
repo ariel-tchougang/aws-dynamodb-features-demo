@@ -2,6 +2,8 @@
 
 Welcome to the GameLeaderboard DynamoDB demo! In this hands-on lab, you'll learn how to use Amazon DynamoDB by building a game leaderboard system for "Cosmic Defenders," a fictional multiplayer space battle game.
 
+![Cosmic Defenders leaderboard](images/cosmic-defenders-leaderboard-blue.png)
+
 ## 🚀 Scenario
 
 You're a backend developer for "Cosmic Defenders," a popular online game where players battle in space arenas. The game needs a robust leaderboard system that can:
