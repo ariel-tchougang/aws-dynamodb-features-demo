@@ -1,8 +1,11 @@
-import boto3
+import sys
+import os
 import time
 import json
 from decimal import Decimal
 from botocore.exceptions import ClientError
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 class DecimalEncoder(json.JSONEncoder):
     """Helper class to convert Decimal to float for JSON serialization."""
@@ -14,7 +17,7 @@ class DecimalEncoder(json.JSONEncoder):
 def get_sample_keys(count=10):
     """Get sample keys from the table for batch operations."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Scan to get some sample keys
@@ -37,7 +40,7 @@ def get_sample_keys(count=10):
 def batch_get_with_retry(keys):
     """Retrieve multiple items using BatchGetItem with retry for unprocessed keys."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     
     # Start timing
     start_time = time.time()
@@ -104,7 +107,7 @@ def batch_get_with_retry(keys):
 def individual_gets(keys):
     """Retrieve items individually for comparison."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Start timing

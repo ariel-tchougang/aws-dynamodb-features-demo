@@ -1,10 +1,13 @@
-import boto3
+import sys
+import os
 import time
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def create_player_inventory_table():
     """Create the PlayerInventory table for transaction demo."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     
     # Check if table already exists
     existing_tables = [table.name for table in dynamodb.tables.all()]
@@ -49,7 +52,7 @@ def create_player_inventory_table():
 def create_game_achievements_table():
     """Create the GameAchievements table for transaction demo."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     
     # Check if table already exists
     existing_tables = [table.name for table in dynamodb.tables.all()]
@@ -94,7 +97,7 @@ def create_game_achievements_table():
 def load_sample_data():
     """Load sample data into the transaction tables."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     player_inventory = dynamodb.Table('PlayerInventory')
     game_achievements = dynamodb.Table('GameAchievements')
     

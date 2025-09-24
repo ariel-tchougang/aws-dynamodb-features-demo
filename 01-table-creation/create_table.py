@@ -1,7 +1,16 @@
-import boto3
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def create_game_leaderboard_table():
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
+
+    # Check if the table already exists
+    existing_tables = dynamodb.tables
+    if 'GameLeaderboard' in existing_tables:
+        print("Table already exists.")
+        return
     
     table = dynamodb.create_table(
         TableName='GameLeaderboard',

@@ -1,13 +1,16 @@
-import boto3
+import sys
+import os
 import time
 import uuid
 from decimal import Decimal
 from botocore.exceptions import ClientError
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def create_player_profile():
     """Create a player profile with version number for optimistic locking."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     player_id = f"cond-{uuid.uuid4().hex[:8]}"
@@ -38,7 +41,7 @@ def create_player_profile():
 def update_with_optimistic_locking(player_id, new_score, expected_version):
     """Update player score with optimistic locking using version number."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Calculate new rank based on score

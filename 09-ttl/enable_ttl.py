@@ -1,11 +1,14 @@
-import boto3
+import sys
+import os
 import time
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_client
 
 def enable_ttl():
     """Enable Time to Live (TTL) on the GameLeaderboard table."""
     
     # Initialize DynamoDB client
-    dynamodb = boto3.client('dynamodb')
+    dynamodb = get_dynamodb_client()
     table_name = 'GameLeaderboard'
     
     print(f"Enabling TTL on table: {table_name}")

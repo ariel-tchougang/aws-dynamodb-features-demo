@@ -1,0 +1,8 @@
+{
+    "aws_region": "us-east-1",
+    "aws_profile": "default",
+    "dynamodb": {
+        "use_local_endpoint": false,
+        "endpoint_url": "http://localhost:8000"
+    }
+}

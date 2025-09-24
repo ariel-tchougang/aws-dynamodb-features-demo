@@ -1,7 +1,10 @@
-import boto3
+import sys
+import os
 import time
 import json
 from decimal import Decimal
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 class DecimalEncoder(json.JSONEncoder):
     """Helper class to convert Decimal to float for JSON serialization."""
@@ -15,7 +18,7 @@ def run_sequential_scan(table_name):
     
     print("=== Running Sequential Scan ===")
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table(table_name)
     
     # Start timing

@@ -1,13 +1,16 @@
-import boto3
+import sys
+import os
 import time
 import uuid
 from decimal import Decimal
 from botocore.exceptions import ClientError
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def create_test_item():
     """Create a test item for conditional delete demonstration."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Generate unique IDs
@@ -33,7 +36,7 @@ def create_test_item():
 def conditional_delete_by_score():
     """Demonstrate conditional delete based on score threshold."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Create test item
@@ -69,7 +72,7 @@ def conditional_delete_by_score():
 def conditional_delete_by_attribute():
     """Demonstrate conditional delete based on attribute existence."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Create test items

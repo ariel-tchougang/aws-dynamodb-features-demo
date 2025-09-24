@@ -1,10 +1,14 @@
-import boto3
+import sys
+import os
 import json
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_client
 
 def create_dynamodb_alarms():
     """Create CloudWatch alarms for DynamoDB metrics."""
     
     # Initialize CloudWatch client
+    import boto3
     cloudwatch = boto3.client('cloudwatch')
     
     # Table name

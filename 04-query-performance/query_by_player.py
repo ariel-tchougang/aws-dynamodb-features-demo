@@ -1,8 +1,11 @@
-import boto3
+import sys
+import os
 import json
 import time
 from decimal import Decimal
 from boto3.dynamodb.conditions import Key
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 class DecimalEncoder(json.JSONEncoder):
     """Helper class to convert Decimal to float for JSON serialization."""
@@ -14,7 +17,7 @@ class DecimalEncoder(json.JSONEncoder):
 def query_by_player_primary_key(player_id):
     """Query games by player ID using the primary key."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     print(f"\n=== Querying games for player {player_id} using PRIMARY KEY ===")
@@ -45,7 +48,7 @@ def query_by_player_primary_key(player_id):
 def query_by_player_scan(player_id):
     """Query games by player ID using a scan operation (inefficient)."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     print(f"\n=== Querying games for player {player_id} using SCAN with filter ===")
@@ -77,7 +80,7 @@ def compare_performance():
     """Compare performance between primary key query and scan."""
     
     # Get a random player ID from the table
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Get a sample player_id from the table

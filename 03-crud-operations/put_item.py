@@ -1,11 +1,14 @@
-import boto3
+import sys
+import os
 from decimal import Decimal
 import time
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def put_item():
     """Create a new game record in the GameLeaderboard table."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Start timing

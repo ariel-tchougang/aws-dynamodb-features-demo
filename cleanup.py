@@ -1,6 +1,8 @@
-import boto3
-import time
 import sys
+import os
+import time
+sys.path.append(os.path.dirname(__file__))
+from utils.dynamodb_helper import get_dynamodb_client
 
 def cleanup_resources():
     """Clean up all resources created during the DynamoDB features demo."""
@@ -8,7 +10,7 @@ def cleanup_resources():
     print("=== Cleaning up DynamoDB Resources ===")
     
     # Initialize DynamoDB client
-    dynamodb = boto3.client('dynamodb')
+    dynamodb = get_dynamodb_client()
     
     # Table name
     table_name = 'GameLeaderboard'

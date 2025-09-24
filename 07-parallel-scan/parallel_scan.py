@@ -1,9 +1,12 @@
-import boto3
+import sys
+import os
 import threading
 import time
 import json
 from decimal import Decimal
 from concurrent.futures import ThreadPoolExecutor
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 class DecimalEncoder(json.JSONEncoder):
     """Helper class to convert Decimal to float for JSON serialization."""
@@ -16,7 +19,7 @@ class ParallelScanWorker:
     """Worker class for parallel scan segments."""
     
     def __init__(self, table_name):
-        self.dynamodb = boto3.resource('dynamodb')
+        self.dynamodb = get_dynamodb_resource()
         self.table = self.dynamodb.Table(table_name)
         self.consumed_capacity = 0
     

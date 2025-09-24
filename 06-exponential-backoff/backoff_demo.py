@@ -1,14 +1,15 @@
 from datetime import datetime
-
-import boto3
+import sys
+import os
 import time
 from botocore.config import Config
 from botocore.exceptions import ClientError
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 config = Config(retries=dict(max_attempts=10))  # DynamoDB default is 10
 
-dynamodb = boto3.resource("dynamodb", config=config)
-dynamodb_client = boto3.client("dynamodb", config=config)
+dynamodb = get_dynamodb_resource()
 table_name = "GameLeaderboard"
 table = dynamodb.Table(table_name)
 

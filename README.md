@@ -32,6 +32,7 @@ This hands-on lab will guide you through implementing the following DynamoDB fea
 11. **Conditional Operations** - Implement optimistic locking for game state updates
 12. **Batch Operations** - Process multiple items efficiently
 13. **CloudWatch Metrics** - Monitor and analyze DynamoDB performance
+14. **PartiQL Queries** - Use SQL-like syntax to query DynamoDB tables
 
 ## 🛠️ Prerequisites
 
@@ -66,6 +67,7 @@ Each lab section is contained in its own directory with detailed instructions an
 11. [Lab 11: Conditional Operations](./11-conditional-operations/)
 12. [Lab 12: Batch Operations](./12-batch-operations/)
 13. [Lab 13: CloudWatch Metrics](./13-cloudwatch-metrics/)
+14. [Lab 14: PartiQL Queries](./14-query-with-partiQL/)
 
 ## 🧹 Cleanup
 

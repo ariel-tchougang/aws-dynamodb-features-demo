@@ -1,9 +1,12 @@
-import boto3
+import sys
+import os
 import time
 import uuid
 import random
 from decimal import Decimal
 from botocore.exceptions import ClientError
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def generate_game_records(count):
     """Generate multiple game records for batch writing."""
@@ -37,7 +40,7 @@ def generate_game_records(count):
 def batch_write_with_retry(records):
     """Write records in batches with retry for unprocessed items."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Start timing
@@ -114,7 +117,7 @@ def batch_write_with_retry(records):
 def individual_writes(records):
     """Write records individually for comparison."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Start timing

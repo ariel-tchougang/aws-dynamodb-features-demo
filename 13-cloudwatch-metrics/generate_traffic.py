@@ -1,10 +1,13 @@
-import boto3
+import sys
+import os
 import time
 import uuid
 import random
 import threading
 from decimal import Decimal
 from concurrent.futures import ThreadPoolExecutor
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def generate_game_record():
     """Generate a random game record."""
@@ -83,7 +86,7 @@ def query_items(dynamodb):
 def generate_traffic():
     """Generate mixed traffic to produce various CloudWatch metrics."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     
     print("Starting traffic generation for CloudWatch metrics...")
     print("This will run for 5 minutes. Press Ctrl+C to stop early.")

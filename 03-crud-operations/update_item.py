@@ -1,8 +1,11 @@
-import boto3
+import sys
+import os
 import json
 from decimal import Decimal
 from datetime import datetime
 import time
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 class DecimalEncoder(json.JSONEncoder):
     """Helper class to convert Decimal to float for JSON serialization."""
@@ -14,7 +17,7 @@ class DecimalEncoder(json.JSONEncoder):
 def update_item():
     """Update an existing game record in the GameLeaderboard table."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Current timestamp for the update

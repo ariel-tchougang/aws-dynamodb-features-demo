@@ -1,8 +1,11 @@
-import boto3
+import sys
+import os
 import json
 import time
 from decimal import Decimal
 from boto3.dynamodb.conditions import Key
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 class DecimalEncoder(json.JSONEncoder):
     """Helper class to convert Decimal to float for JSON serialization."""
@@ -14,7 +17,7 @@ class DecimalEncoder(json.JSONEncoder):
 def query_by_date_scan(game_date):
     """Query games by date using a scan operation (inefficient)."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     print(f"\n=== Querying games for date {game_date} using SCAN with filter ===")
@@ -45,7 +48,7 @@ def query_by_date_scan(game_date):
 def query_by_date_gsi(game_date):
     """Query games by date using the GSI (efficient)."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     print(f"\n=== Querying games for date {game_date} using GSI ===")
@@ -78,7 +81,7 @@ def compare_performance():
     """Compare performance between GSI query and scan for date-based queries."""
     
     # Get a random date from the table
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Get a sample game_date from the table

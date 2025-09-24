@@ -1,13 +1,16 @@
-import boto3
+import sys
+import os
 import time
 import uuid
 from decimal import Decimal
 from botocore.exceptions import ClientError
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def conditional_put_new_item():
     """Demonstrate conditional put to create an item only if it doesn't exist."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Generate unique IDs
@@ -64,7 +67,7 @@ def conditional_put_new_item():
 def conditional_put_with_value_check():
     """Demonstrate conditional put based on attribute value."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Generate unique IDs

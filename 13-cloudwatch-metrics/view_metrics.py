@@ -1,12 +1,16 @@
-import boto3
+import sys
+import os
 import time
 from datetime import datetime, timedelta
 import json
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_client
 
 def get_dynamodb_metrics():
     """Retrieve and display DynamoDB CloudWatch metrics."""
     
     # Initialize CloudWatch client
+    import boto3
     cloudwatch = boto3.client('cloudwatch')
     
     # Table name
@@ -110,7 +114,7 @@ def get_dynamodb_metrics():
     print("\n=== Provisioned Capacity ===")
     
     # Get current provisioned capacity
-    dynamodb = boto3.client('dynamodb')
+    dynamodb = get_dynamodb_client()
     table_info = dynamodb.describe_table(TableName=table_name)['Table']
     
     read_capacity = table_info['ProvisionedThroughput']['ReadCapacityUnits']
@@ -121,6 +125,7 @@ def get_dynamodb_metrics():
     
     # Check if auto-scaling is enabled
     try:
+        import boto3
         application_autoscaling = boto3.client('application-autoscaling')
         
         read_scaling = application_autoscaling.describe_scalable_targets(

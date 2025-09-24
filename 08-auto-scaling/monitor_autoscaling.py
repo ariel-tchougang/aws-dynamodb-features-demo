@@ -1,12 +1,16 @@
-import boto3
+import sys
+import os
 import time
 from datetime import datetime, timedelta
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_client
 
 def monitor_autoscaling():
     """Monitor auto-scaling activities and metrics."""
     
     # Initialize clients
-    dynamodb = boto3.client('dynamodb')
+    dynamodb = get_dynamodb_client()
+    import boto3
     cloudwatch = boto3.client('cloudwatch')
     application_autoscaling = boto3.client('application-autoscaling')
     

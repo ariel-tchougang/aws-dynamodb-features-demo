@@ -1,14 +1,17 @@
-import boto3
+import sys
+import os
 import time
 import uuid
 import random
 from decimal import Decimal
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def add_items_with_ttl():
     """Add items with various TTL expiration times."""
     
     # Initialize DynamoDB resource
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Current time in epoch seconds

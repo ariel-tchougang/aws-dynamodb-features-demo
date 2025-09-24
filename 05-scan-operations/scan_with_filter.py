@@ -1,8 +1,11 @@
-import boto3
+import sys
+import os
 import json
 import time
 from decimal import Decimal
 from boto3.dynamodb.conditions import Key, Attr
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 class DecimalEncoder(json.JSONEncoder):
     """Helper class to convert Decimal to float for JSON serialization."""
@@ -14,7 +17,7 @@ class DecimalEncoder(json.JSONEncoder):
 def scan_with_filter():
     """Demonstrate scan with filter expression and analyze filter efficiency."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     print("=== Scan with Filter Expression ===")

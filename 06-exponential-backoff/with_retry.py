@@ -1,9 +1,12 @@
-import boto3
+import sys
+import os
 import time
 import json
 from decimal import Decimal
 from botocore.config import Config
 from botocore.exceptions import ClientError
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 class DecimalEncoder(json.JSONEncoder):
     """Helper class to convert Decimal to float for JSON serialization."""
@@ -24,7 +27,15 @@ def run_with_retry():
     )
     
     # Initialize DynamoDB with retry configuration
-    dynamodb = boto3.resource('dynamodb', config=retry_config)
+    # The helper function doesn't support custom config, so we'll use boto3 directly here
+    from utils.dynamodb_helper import load_config
+    config_data = load_config()
+    import boto3
+    session = boto3.Session(profile_name=config_data['aws_profile'])
+    if config_data['dynamodb']['use_local_endpoint']:
+        dynamodb = session.resource('dynamodb', region_name=config_data['aws_region'], endpoint_url=config_data['dynamodb']['endpoint_url'], config=retry_config)
+    else:
+        dynamodb = session.resource('dynamodb', region_name=config_data['aws_region'], config=retry_config)
     table = dynamodb.Table('GameLeaderboard')
     
     print("=== Running Get Item Operations with SDK Retry Configuration ===")

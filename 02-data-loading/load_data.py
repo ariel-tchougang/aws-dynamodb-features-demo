@@ -1,7 +1,10 @@
 import json
-import boto3
+import sys
+import os
 import time
 from decimal import Decimal
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def load_data_to_dynamodb(filename="game_data.json"):
     """Load game data from JSON file to DynamoDB table."""
@@ -17,7 +20,7 @@ def load_data_to_dynamodb(filename="game_data.json"):
         item['expiration_time'] = Decimal(str(item['expiration_time']))
     
     # Initialize DynamoDB resource
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Track progress

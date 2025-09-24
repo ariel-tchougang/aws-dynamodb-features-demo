@@ -1,12 +1,15 @@
-import boto3
+import sys
+import os
 import time
 from botocore.exceptions import ClientError
 from decimal import Decimal
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_client
 
 def award_achievement_reward(player_id, achievement_id):
     """Award achievement reward using a transaction."""
     
-    dynamodb = boto3.client('dynamodb')
+    dynamodb = get_dynamodb_client()
     
     try:
         print(f"\nAwarding achievement reward to player {player_id}...")
@@ -64,7 +67,7 @@ def award_achievement_reward(player_id, achievement_id):
 def transfer_item(from_player, to_player, item_id):
     """Transfer an item between players using a transaction."""
     
-    dynamodb = boto3.client('dynamodb')
+    dynamodb = get_dynamodb_client()
     
     try:
         print(f"\nTransferring item {item_id} from {from_player} to {to_player}...")
@@ -114,7 +117,7 @@ def transfer_item(from_player, to_player, item_id):
 def read_player_state(player_id):
     """Read player's inventory and achievements atomically."""
     
-    dynamodb = boto3.client('dynamodb')
+    dynamodb = get_dynamodb_client()
     
     try:
         print(f"\nReading state for player {player_id}...")

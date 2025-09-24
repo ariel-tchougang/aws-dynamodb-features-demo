@@ -1,11 +1,15 @@
-import boto3
+import sys
+import os
 import time
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_client
 
 def configure_autoscaling():
     """Configure auto-scaling for the GameLeaderboard table."""
     
     # Initialize clients
-    dynamodb = boto3.client('dynamodb')
+    dynamodb = get_dynamodb_client()
+    import boto3
     application_autoscaling = boto3.client('application-autoscaling')
     
     table_name = 'GameLeaderboard'

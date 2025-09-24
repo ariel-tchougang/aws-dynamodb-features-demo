@@ -1,10 +1,13 @@
-import boto3
+import sys
+import os
 import time
 import random
 import uuid
 import threading
 from decimal import Decimal
 from concurrent.futures import ThreadPoolExecutor
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def generate_game_record():
     """Generate a random game record."""
@@ -56,7 +59,7 @@ def read_items(dynamodb, count):
 def generate_traffic():
     """Generate increasing traffic to trigger auto-scaling."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     
     print("Starting traffic generation to trigger auto-scaling...")
     print("Press Ctrl+C to stop")

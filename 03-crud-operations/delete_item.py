@@ -1,7 +1,10 @@
-import boto3
+import sys
+import os
 import json
 from decimal import Decimal
 import time
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 class DecimalEncoder(json.JSONEncoder):
     """Helper class to convert Decimal to float for JSON serialization."""
@@ -13,7 +16,7 @@ class DecimalEncoder(json.JSONEncoder):
 def delete_item():
     """Delete a game record from the GameLeaderboard table."""
     
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
     table = dynamodb.Table('GameLeaderboard')
     
     # Start timing

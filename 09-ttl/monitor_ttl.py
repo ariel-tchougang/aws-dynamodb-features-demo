@@ -1,13 +1,17 @@
-import boto3
+import sys
+import os
 import time
 from datetime import datetime, timedelta
 from boto3.dynamodb.conditions import Key, Attr
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from utils.dynamodb_helper import get_dynamodb_resource
 
 def monitor_ttl():
     """Monitor TTL deletions and metrics."""
     
     # Initialize clients
-    dynamodb = boto3.resource('dynamodb')
+    dynamodb = get_dynamodb_resource()
+    import boto3
     cloudwatch = boto3.client('cloudwatch')
     
     table = dynamodb.Table('GameLeaderboard')

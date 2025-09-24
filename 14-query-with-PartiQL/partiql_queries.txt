@@ -1,0 +1,45 @@
+# PartiQL Queries for GameLeaderboard Table
+# Copy and paste these queries into NoSQL Workbench
+
+# 1. SELECT all items
+SELECT * FROM GameLeaderboard
+
+# 2. SELECT with WHERE clause (high scores)
+SELECT * FROM GameLeaderboard WHERE score > 9000
+
+# 3. SELECT specific attributes
+SELECT player_id, player_name, score FROM GameLeaderboard
+
+# 4. SELECT with ORDER BY using GSI
+SELECT * FROM GameLeaderboard.GameDateIndex WHERE game_date = '2024-01-15' ORDER BY score DESC
+
+# 5. SELECT with LIMIT
+SELECT * FROM GameLeaderboard LIMIT 5
+
+# 6. SELECT with multiple conditions (exact match)
+SELECT * FROM GameLeaderboard WHERE player_id = 'player123' AND game_id = 'game456'
+
+# 7. SELECT by player with score range
+SELECT * FROM GameLeaderboard WHERE player_id = 'player123' AND score BETWEEN 5000 AND 10000
+
+# 8. INSERT new item
+INSERT INTO GameLeaderboard VALUE {
+    'player_id': 'partiql_player',
+    'game_id': 'partiql_game',
+    'player_name': 'PartiQL Tester',
+    'score': 8500,
+    'game_date': '2024-01-20',
+    'level_completed': 15
+}
+
+# 9. UPDATE item
+UPDATE GameLeaderboard SET score = 9500 WHERE player_id = 'partiql_player' AND game_id = 'partiql_game'
+
+# 10. DELETE item
+DELETE FROM GameLeaderboard WHERE player_id = 'partiql_player' AND game_id = 'partiql_game'
+
+# 11. SELECT with CONTAINS function
+SELECT * FROM GameLeaderboard WHERE CONTAINS(player_name, 'Player')
+
+# 12. SELECT top scores using GSI
+SELECT * FROM GameLeaderboard.GameDateIndex WHERE game_date = '2024-01-15' ORDER BY score DESC LIMIT 10
